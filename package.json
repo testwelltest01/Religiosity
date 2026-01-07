@@ -1,0 +1,26 @@
+{
+  "name": "korean-religiosity-survey",
+  "version": "1.0.0",
+  "description": "한국인 종교성 연구 설문조사 웹사이트",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site, no build needed'",
+    "start": "npx serve ."
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "devDependencies": {
+    "vercel": "^33.0.0"
+  },
+  "keywords": [
+    "survey",
+    "religiosity",
+    "korean",
+    "psychology",
+    "research"
+  ],
+  "author": "",
+  "license": "MIT"
+}

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "한국인 종교성 연구 설문조사 웹사이트",
   "main": "index.html",
+  "type": "module",
   "scripts": {
     "dev": "vercel dev",
     "build": "echo 'Static site, no build needed'",

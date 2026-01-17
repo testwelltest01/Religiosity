@@ -1,169 +1,68 @@
-# 한국인 종교성 연구 설문조사 웹사이트
+# 한국인 종교성 척도 확장 연구 설문조사
 
-## 📋 개요
+## 📋 프로젝트 개요
 
-이 프로젝트는 한국인의 종교성에 관한 연구 설문조사를 위한 웹 애플리케이션입니다.
+이 프로젝트는 **"한국인 종교성 척도 확장을 위한 예비문항 개발 연구: 경험적 차원과 지적 차원을 중심으로"** 석사학위 논문 연구를 위해 개발된 웹 기반 설문조사 시스템입니다.
 
-## 🚀 Vercel 배포 방법
+기존 한국인 종교성 척도(박준성·정태연, 2011)에 **경험적 차원**과 **지적 차원**을 추가하여, 한국인의 종교성을 보다 다각적이고 포괄적으로 측정하는 것을 목적으로 합니다.
 
-### 1단계: GitHub에 코드 업로드
+## 🗂️ 설문 구성 (총 9개 섹션, 133문항)
 
-```bash
-# 새 저장소 생성 후
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
-git push -u origin main
-```
+본 설문은 총 9개의 파트로 구성되어 있으며, 예상 소요 시간은 약 20-25분입니다.
 
-### 2단계: Vercel에 배포
+| 섹션 | 측정 내용 | 문항 수 | 비고 |
+|:---:|:---|:---:|:---|
+| **Part 1** | **인구통계학적 정보** | 10문항 | 성별, 연령, 종교, 종교활동 빈도 등 |
+| **Part 2** | **한국인 종교성 척도** | 34문항 | 박준성·정태연 (2011) |
+| **Part 3** | **경험적 차원 (신규)** | 8문항 | 일상적 영적 경험(6), 전환적 종교 경험(2) |
+| **Part 4** | **지적 차원 (신규)** | 8문항 | 교리(3), 경전(2), 의례(2), 적용(1) |
+| **Part 5** | **내재적-외현적 종교 성향** | 26문항 | Allport & Ross (1967), 최영민 (2002) 번안 |
+| **Part 6** | **Quest 종교 성향** | 12문항 | Batson & Schoenrade (1991) |
+| **Part 7** | **영적 안녕 척도** | 20문항 | Paloutzian & Ellison (1982) |
+| **Part 8** | **우울 척도 (CES-D)** | 10문항 | Radloff (1977) 단축형 |
+| **Part 9** | **삶의 만족도 (SWLS)** | 5문항 | Diener et al. (1985) |
 
-1. [Vercel](https://vercel.com)에 로그인
-2. "New Project" 클릭
-3. GitHub 저장소 연결
-4. "Import" 클릭
-5. "Deploy" 클릭
+## 🛠️ 기술 스택
 
-### 3단계: Supabase 설정 (데이터 수집용)
+논문의 온라인 설문 시스템 구축 계획에 따라 다음과 같은 기술을 사용하였습니다.
 
-#### 3-1. Supabase 프로젝트 생성
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript (반응형 디자인 적용)
+- **Backend**: Vercel Serverless Functions (Node.js)
+- **Database**: Supabase (PostgreSQL) - JSONB 형식으로 유연한 데이터 저장
+- **Hosting**: Vercel
 
-1. [Supabase](https://supabase.com)에 가입/로그인
-2. "New Project" 클릭
-3. 프로젝트 이름 입력 및 비밀번호 설정
-4. 리전 선택 (Northeast Asia (Tokyo) 권장)
+## 🚀 배포 및 설정 방법
 
-#### 3-2. 데이터베이스 테이블 생성
+### 1. Vercel 배포
 
-Supabase 대시보드에서 SQL Editor로 이동하여 다음 쿼리 실행:
+1. GitHub 저장소에 코드를 푸시합니다.
+2. [Vercel](https://vercel.com)에서 "New Project"를 클릭하고 GitHub 저장소를 연결합니다.
+3. Framework Preset은 "Other"로 설정합니다.
+4. "Deploy"를 클릭합니다.
+
+### 2. Supabase 데이터베이스 설정
+
+1. [Supabase](https://supabase.com) 프로젝트를 생성합니다.
+2. SQL Editor에서 다음 쿼리를 실행하여 테이블을 생성합니다:
 
 ```sql
--- 설문 응답 테이블 생성
+-- 설문 응답 저장용 테이블
 CREATE TABLE survey_responses (
     id BIGSERIAL PRIMARY KEY,
-    response_data JSONB NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    response_data JSONB NOT NULL, -- 모든 응답을 JSON 형태로 저장
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    user_agent TEXT
 );
 
--- Row Level Security 활성화
+-- 보안 정책 (RLS) 설정
 ALTER TABLE survey_responses ENABLE ROW LEVEL SECURITY;
 
--- 삽입 정책 생성 (누구나 삽입 가능)
+-- 익명 사용자도 데이터를 저장(INSERT)할 수 있도록 허용
 CREATE POLICY "Allow anonymous inserts" ON survey_responses
     FOR INSERT
     WITH CHECK (true);
 
--- 조회 정책 생성 (인증된 사용자만 조회 가능)
+-- 데이터 조회(SELECT)는 인증된 관리자만 가능하도록 제한
 CREATE POLICY "Allow authenticated reads" ON survey_responses
     FOR SELECT
     USING (auth.role() = 'authenticated');
-```
-
-#### 3-3. Vercel 환경 변수 설정
-
-1. Vercel 프로젝트 대시보드 → Settings → Environment Variables
-2. 다음 변수 추가:
-
-| 변수 이름 | 값 |
-|----------|-----|
-| `SUPABASE_URL` | Supabase 프로젝트 URL (Settings > API에서 확인) |
-| `SUPABASE_ANON_KEY` | Supabase anon public 키 (Settings > API에서 확인) |
-
-3. "Redeploy" 클릭하여 변경사항 적용
-
-## 📊 데이터 확인 방법
-
-### Supabase 대시보드에서 확인
-
-1. Supabase 대시보드 → Table Editor
-2. `survey_responses` 테이블 선택
-3. 수집된 응답 데이터 확인
-
-### 데이터 내보내기
-
-1. Table Editor에서 데이터 선택
-2. "Export" 버튼 클릭
-3. CSV 또는 JSON 형식으로 다운로드
-
-### SQL로 데이터 분석
-
-```sql
--- 전체 응답 수
-SELECT COUNT(*) FROM survey_responses;
-
--- 최근 응답 10개
-SELECT * FROM survey_responses 
-ORDER BY created_at DESC 
-LIMIT 10;
-
--- 날짜별 응답 수
-SELECT 
-    DATE(created_at) as date,
-    COUNT(*) as count
-FROM survey_responses
-GROUP BY DATE(created_at)
-ORDER BY date DESC;
-
--- 특정 질문 응답 분석 (예: 종교)
-SELECT 
-    response_data->>'religion' as religion,
-    COUNT(*) as count
-FROM survey_responses
-GROUP BY response_data->>'religion';
-```
-
-## 📁 프로젝트 구조
-
-```
-survey-website/
-├── index.html          # 메인 HTML 파일
-├── styles.css          # 스타일시트
-├── script.js           # 클라이언트 JavaScript
-├── api/
-│   └── submit.js       # Vercel Serverless Function
-├── package.json        # 프로젝트 설정
-├── vercel.json         # Vercel 배포 설정
-└── README.md           # 이 파일
-```
-
-## 🔧 로컬 개발
-
-```bash
-# 의존성 설치
-npm install
-
-# 로컬 개발 서버 실행
-npm run dev
-```
-
-## ⚙️ 환경 변수
-
-| 변수 | 설명 | 필수 |
-|-----|------|-----|
-| `SUPABASE_URL` | Supabase 프로젝트 URL | 예 |
-| `SUPABASE_ANON_KEY` | Supabase 공개 API 키 | 예 |
-
-## 📱 기능
-
-- ✅ 반응형 디자인 (모바일/태블릿/데스크톱)
-- ✅ 진행률 표시
-- ✅ 섹션별 유효성 검사
-- ✅ 자동 데이터 저장
-- ✅ 오프라인 백업 (localStorage)
-- ✅ 접근성 지원
-
-## 🔒 보안
-
-- 모든 데이터는 HTTPS로 전송됩니다
-- Supabase Row Level Security로 데이터 보호
-- 개인 식별 정보 수집 없음 (익명 설문)
-
-## 📞 문의
-
-연구 관련 문의: research@example.com
-
----
-
-© 2024 한국인 종교성 연구

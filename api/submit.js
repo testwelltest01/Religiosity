@@ -1,5 +1,6 @@
 // Vercel Serverless Function - 설문 데이터 저장
 // Supabase를 사용하여 데이터를 저장합니다.
+// 논문 '5.4.5. 데이터 관리' 및 '온라인 설문 시스템 구축' 요건 반영
 
 import { createClient } from '@supabase/supabase-js';
 
@@ -8,7 +9,7 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
 export default async function handler(req, res) {
-    // CORS 헤더 설정
+    // CORS 헤더 설정 (모든 도메인 허용)
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -33,28 +34,30 @@ export default async function handler(req, res) {
 
         // Supabase 클라이언트 생성
         if (!supabaseUrl || !supabaseKey) {
-            console.error('Supabase credentials not configured');
-            // Supabase 설정이 없으면 로그만 남기고 성공 응답
-            console.log('Survey response received:', JSON.stringify(data, null, 2));
+            console.warn('Supabase credentials not configured');
+            // Supabase 설정이 없는 경우 (개발/테스트 환경), 성공으로 처리하되 로그만 남김
+            console.log('Survey response received (Mock save):', JSON.stringify(data, null, 2));
             return res.status(200).json({ 
                 success: true, 
-                message: 'Data logged (Supabase not configured)' 
+                message: 'Data received (Supabase not configured, check logs)' 
             });
         }
 
         const supabase = createClient(supabaseUrl, supabaseKey);
 
-        // 데이터 저장
+        // 데이터베이스에 저장
+        // README.md의 테이블 스키마에 맞춰 user_agent를 분리하여 저장
         const { error } = await supabase
             .from('survey_responses')
             .insert([{
-                response_data: data,
-                created_at: new Date().toISOString()
+                response_data: data,                   // 전체 응답 데이터 (JSONB)
+                user_agent: data.user_agent || req.headers['user-agent'], // 기기 정보 (분석 및 품질 관리용)
+                created_at: new Date().toISOString()   // 서버 기준 제출 시간
             }]);
 
         if (error) {
             console.error('Supabase insert error:', error);
-            return res.status(500).json({ error: 'Failed to save data' });
+            return res.status(500).json({ error: 'Failed to save data to database' });
         }
 
         return res.status(200).json({ 

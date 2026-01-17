@@ -13,7 +13,6 @@
 </head>
 
 <body>
-    <!-- 배경 장식 -->
     <div class="bg-decoration">
         <div class="circle circle-1"></div>
         <div class="circle circle-2"></div>
@@ -21,7 +20,6 @@
     </div>
 
     <div class="container">
-        <!-- 헤더 -->
         <header class="header">
             <div class="logo">
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -35,14 +33,11 @@
             </div>
         </header>
 
-        <!-- 진행률 바 -->
         <div class="progress-container">
             <div class="progress-bar" id="progressBar"></div>
         </div>
 
-        <!-- 메인 컨텐츠 -->
         <main class="main-content">
-            <!-- 시작 페이지 -->
             <section class="section active" id="section-intro">
                 <div class="section-card intro-card">
                     <div class="intro-icon">
@@ -60,7 +55,6 @@
                     </div>
                     <h1>한국인 종교성 연구 설문조사</h1>
 
-                    <!-- 연구자 소개 -->
                     <div class="researcher-info">
                         <div class="researcher-badge">연구자 소개</div>
                         <div class="researcher-details">
@@ -76,16 +70,16 @@
                         귀하께서 응답해 주시는 내용은 연구 목적으로만 사용되며,
                         통계법 제33조에 의거하여 비밀이 보장됩니다.<br><br>
                         설문에는 정답이 없으며, 평소 귀하의 생각과 느낌을 솔직하게 응답해 주시면 됩니다.
-                        소요 시간은 약 15~20분입니다.
+                        소요 시간은 약 20~25분입니다.
                     </p>
                     <div class="intro-info">
                         <div class="info-item">
                             <span class="info-icon">📋</span>
-                            <span>총 7개 섹션</span>
+                            <span>총 9개 섹션</span>
                         </div>
                         <div class="info-item">
                             <span class="info-icon">⏱️</span>
-                            <span>약 15~20분 소요</span>
+                            <span>약 20~25분 소요</span>
                         </div>
                         <div class="info-item">
                             <span class="info-icon">🔒</span>
@@ -102,7 +96,6 @@
                 </div>
             </section>
 
-            <!-- Part 1: 인구통계학적 정보 -->
             <section class="section" id="section-1">
                 <div class="section-card">
                     <div class="section-header">
@@ -111,7 +104,6 @@
                         <p class="section-desc">기본적인 정보를 입력해 주세요.</p>
                     </div>
                     <div class="questions-container">
-                        <!-- 성별 -->
                         <div class="question-group" data-question="gender">
                             <label class="question-label">
                                 <span class="q-number">1</span>
@@ -131,7 +123,6 @@
                             </div>
                         </div>
 
-                        <!-- 연령 -->
                         <div class="question-group" data-question="age">
                             <label class="question-label">
                                 <span class="q-number">2</span>
@@ -143,7 +134,6 @@
                             </div>
                         </div>
 
-                        <!-- 학력 -->
                         <div class="question-group" data-question="education">
                             <label class="question-label">
                                 <span class="q-number">3</span>
@@ -173,7 +163,6 @@
                             </div>
                         </div>
 
-                        <!-- 종교 -->
                         <div class="question-group" data-question="religion">
                             <label class="question-label">
                                 <span class="q-number">4</span>
@@ -208,7 +197,6 @@
                             </div>
                         </div>
 
-                        <!-- 종교 활동 기간 -->
                         <div class="question-group" data-question="religion_duration">
                             <label class="question-label">
                                 <span class="q-number">5</span>
@@ -248,7 +236,6 @@
                             </div>
                         </div>
 
-                        <!-- 종교 활동 빈도 -->
                         <div class="question-group" data-question="religion_frequency">
                             <label class="question-label">
                                 <span class="q-number">6</span>
@@ -286,7 +273,6 @@
                 </div>
             </section>
 
-            <!-- Part 2: 한국인 종교성 척도 -->
             <section class="section" id="section-2">
                 <div class="section-card">
                     <div class="section-header">
@@ -308,7 +294,6 @@
                 </div>
             </section>
 
-            <!-- Part 3: 경험적 차원 -->
             <section class="section" id="section-3">
                 <div class="section-card">
                     <div class="section-header">
@@ -330,7 +315,6 @@
                 </div>
             </section>
 
-            <!-- Part 4: 지적 차원 -->
             <section class="section" id="section-4">
                 <div class="section-card">
                     <div class="section-header">
@@ -353,7 +337,6 @@
                 </div>
             </section>
 
-            <!-- Part 5: 내재적/외재적 종교 성향 -->
             <section class="section" id="section-5">
                 <div class="section-card">
                     <div class="section-header">
@@ -375,7 +358,6 @@
                 </div>
             </section>
 
-            <!-- Part 6: Quest 척도 -->
             <section class="section" id="section-6">
                 <div class="section-card">
                     <div class="section-header">
@@ -395,19 +377,17 @@
                 </div>
             </section>
 
-            <!-- Part 7: 삶의 만족도 -->
-            <section class="section" id="section-7">
+             <section class="section" id="section-7">
                 <div class="section-card">
                     <div class="section-header">
                         <span class="section-badge">Part 7</span>
-                        <h2>삶의 만족도</h2>
-                        <p class="section-desc">다음은 귀하의 삶 전반에 대한 문항입니다.</p>
+                        <h2>영적 안녕</h2>
+                        <p class="section-desc">다음은 귀하의 영적인 안녕감에 대한 문항입니다. 6점 척도로 응답해 주세요.</p>
                     </div>
 
-                    <div class="scale-legend scale-7">
-                        <span>① 전혀 그렇지 않다</span>
-                        <span>④ 보통</span>
-                        <span>⑦ 매우 그렇다</span>
+                    <div class="scale-legend">
+                        <span>① 전혀 동의하지 않음</span>
+                        <span>⑥ 강하게 동의함</span>
                     </div>
 
                     <div class="questions-container" id="part7-questions">
@@ -415,7 +395,43 @@
                 </div>
             </section>
 
-            <!-- 완료 페이지 -->
+            <section class="section" id="section-8">
+                <div class="section-card">
+                    <div class="section-header">
+                        <span class="section-badge">Part 8</span>
+                        <h2>정서 상태</h2>
+                        <p class="section-desc">지난 <strong>일주일 동안</strong> 아래의 내용과 같이 느꼈던 횟수를 표시해 주세요.</p>
+                    </div>
+
+                    <div class="scale-legend">
+                        <span>0: 극히 드물게(1일 미만)</span>
+                        <span>3: 거의 대부분(5-7일)</span>
+                    </div>
+
+                    <div class="questions-container" id="part8-questions">
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="section-9">
+                <div class="section-card">
+                    <div class="section-header">
+                        <span class="section-badge">Part 9</span>
+                        <h2>삶의 만족도</h2>
+                        <p class="section-desc">다음은 귀하의 삶 전반에 대한 문항입니다.</p>
+                    </div>
+
+                    <div class="scale-legend scale-7">
+                        <span>① 전혀 동의하지 않음</span>
+                        <span>④ 보통</span>
+                        <span>⑦ 매우 동의함</span>
+                    </div>
+
+                    <div class="questions-container" id="part9-questions">
+                    </div>
+                </div>
+            </section>
+
             <section class="section" id="section-complete">
                 <div class="section-card complete-card">
                     <div class="complete-icon">
@@ -444,7 +460,6 @@
             </section>
         </main>
 
-        <!-- 네비게이션 버튼 -->
         <div class="nav-buttons" id="navButtons">
             <button class="btn btn-secondary" id="prevBtn" onclick="prevSection()" style="display: none;">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -470,13 +485,11 @@
         </div>
     </div>
 
-    <!-- 로딩 오버레이 -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
         <p>제출 중입니다...</p>
     </div>
 
-    <!-- 토스트 메시지 -->
     <div class="toast" id="toast"></div>
 
     <script src="script.js"></script>
